@@ -1,5 +1,5 @@
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
     id("com.google.dagger.hilt.android")
@@ -7,20 +7,14 @@ plugins {
 }
 
 android {
-    namespace = "ru.asmelnikov.cinemaapp"
-    compileSdk = 34
+    namespace = "ru.asmelnikov.auth"
+    compileSdk = 33
 
     defaultConfig {
-        applicationId = "ru.asmelnikov.cinemaapp"
         minSdk = 27
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -44,11 +38,6 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
-    }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
     }
 }
 
@@ -90,7 +79,6 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.44")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
 
-    implementation(project(":feature:auth"))
     implementation(project(":core:util"))
 
 }

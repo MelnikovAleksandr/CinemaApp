@@ -3,44 +3,61 @@ package ru.asmelnikov.cinemaapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import ru.asmelnikov.cinemaapp.navigation.BottomNavigationBar
+import ru.asmelnikov.cinemaapp.navigation.NavGraph
 import ru.asmelnikov.cinemaapp.ui.theme.CinemaAppTheme
+import ru.asmelnikov.util.Screen
 
 class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             CinemaAppTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
+                val navController = rememberNavController()
+                val currentRoute =
+                    navController.currentBackStackEntryAsState().value?.destination?.route
+
+
+                var bottomBarState by rememberSaveable { (mutableStateOf(false)) }
+
+                bottomBarState = when (currentRoute) {
+                    Screen.HomeScreen.route -> true
+                    Screen.WatchListScreen.route -> true
+                    Screen.SearchScreen.route -> true
+                    Screen.ProfileScreen.route -> true
+                    else -> false
+                }
+                Scaffold(
+                    bottomBar = {
+                        AnimatedVisibility(visible = bottomBarState) {
+                            BottomNavigationBar(
+                                onItemClick = {
+                                    navController.navigate(it) {
+                                        popUpTo(navController.graph.findStartDestination().id) {
+                                            saveState = true
+                                        }
+                                        launchSingleTop = true
+                                        restoreState = true
+                                    }
+                                })
+                        }
+                    }
+                ) { contentPadding ->
+                    NavGraph(navController = navController, paddingValues = contentPadding)
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    CinemaAppTheme {
-        Greeting("Android")
     }
 }

@@ -15,4 +15,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "CinemaApp"
 include(":app")
- 
+include(":feature:auth")
+include(":core:util")
