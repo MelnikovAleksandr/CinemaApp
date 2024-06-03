@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 fun AuthenticationScreen(
     onNavigateSignInClick: () -> Unit,
 ) {
-//    AuthenticationContent(
-//        onNavigateSignInClick = onNavigateSignInClick,
-//    )
+    AuthenticationContent(
+        onNavigateSignInClick = onNavigateSignInClick,
+    )
 }

@@ -8,6 +8,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.NavHostController
 import ru.asmelnikov.auth.navigation.authenticationScreen
+import ru.asmelnikov.onboarding.presentation.navigation.onBoardingScreen
+import ru.asmelnikov.splash.presentation.navigation.splashScreen
 import ru.asmelnikov.util.Screen
 
 
@@ -20,8 +22,9 @@ fun NavGraph(navController: NavHostController, paddingValues: PaddingValues) {
         navController = navController,
         startDestination = Screen.SplashScreen.route
     ) {
-
+        splashScreen(navController = navController)
         authenticationScreen(navController = navController)
+        onBoardingScreen(navController = navController)
 
     }
 }
