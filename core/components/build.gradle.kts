@@ -1,26 +1,17 @@
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("com.google.gms.google-services")
-    id("com.google.dagger.hilt.android")
-    id("kotlin-kapt")
 }
 
 android {
-    namespace = "ru.asmelnikov.cinemaapp"
-    compileSdk = 34
+    namespace = "ru.asmelnikov.components"
+    compileSdk = 33
 
     defaultConfig {
-        applicationId = "ru.asmelnikov.cinemaapp"
         minSdk = 27
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -45,15 +36,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
     }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
 }
-
-val retrofitVersion: String by project.extra
-val okhttpVersion: String by project.extra
 
 dependencies {
 
@@ -74,37 +57,4 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-
-    //Firebase
-    implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
-    implementation("com.google.firebase:firebase-storage-ktx")
-    implementation("com.google.firebase:firebase-auth-ktx")
-    implementation("com.google.firebase:firebase-firestore-ktx")
-
-    //Network
-    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
-    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
-    implementation("com.squareup.okhttp3:logging-interceptor:$okhttpVersion")
-
-    //Hilt
-    implementation("com.google.dagger:hilt-android:2.44")
-    kapt("com.google.dagger:hilt-android-compiler:2.44")
-
-    // Splash API
-    implementation("androidx.core:core-splashscreen:1.0.1")
-
-    implementation(project(":feature:auth"))
-    implementation(project(":feature:splash"))
-    implementation(project(":feature:onboarding"))
-    implementation(project(":feature:signin"))
-    implementation(project(":feature:signup"))
-    implementation(project(":feature:home"))
-    implementation(project(":core:util"))
-    implementation(project(":core:domain"))
-    implementation(project(":data"))
-
-}
-
-kapt {
-    correctErrorTypes = true
 }
