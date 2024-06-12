@@ -11,18 +11,24 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import dagger.hilt.android.AndroidEntryPoint
 import ru.asmelnikov.cinemaapp.navigation.BottomNavigationBar
 import ru.asmelnikov.cinemaapp.navigation.NavGraph
 import ru.asmelnikov.cinemaapp.ui.theme.CinemaAppTheme
 import ru.asmelnikov.util.Screen
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        installSplashScreen()
+
         setContent {
             CinemaAppTheme {
                 val navController = rememberNavController()
