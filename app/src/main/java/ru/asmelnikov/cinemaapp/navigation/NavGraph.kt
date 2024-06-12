@@ -10,6 +10,7 @@ import androidx.navigation.NavHostController
 import ru.asmelnikov.auth.navigation.authenticationScreen
 import ru.asmelnikov.home.presentation.navigation.homeScreen
 import ru.asmelnikov.onboarding.presentation.navigation.onBoardingScreen
+import ru.asmelnikov.profile.presentation.navigation.profile
 import ru.asmelnikov.signin.presentation.navigation.signInScreen
 import ru.asmelnikov.signup.presentation.navigation.signUpScreen
 import ru.asmelnikov.splash.presentation.navigation.splashScreen
@@ -20,7 +21,6 @@ import ru.asmelnikov.util.Screen
 fun NavGraph(navController: NavHostController, paddingValues: PaddingValues) {
     NavHost(
         modifier = Modifier
-            .padding(paddingValues)
             .fillMaxSize(),
         navController = navController,
         startDestination = Screen.SplashScreen.route
@@ -31,5 +31,7 @@ fun NavGraph(navController: NavHostController, paddingValues: PaddingValues) {
         signInScreen(navController = navController)
         signUpScreen(navController = navController)
         homeScreen(navController = navController)
+        profile(navController = navController)
+
     }
 }

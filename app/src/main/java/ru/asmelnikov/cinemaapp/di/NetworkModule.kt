@@ -8,6 +8,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Cache
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.asmelnikov.cinemaapp.utils.CacheInterceptor
@@ -31,8 +32,10 @@ object NetworkModule {
         cacheInterceptor: CacheInterceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
-            .cache(Cache(File(context.cacheDir, "http-cache"), 10L * 1024L * 1024L))
-            .addNetworkInterceptor(cacheInterceptor)
+            .addInterceptor(
+                HttpLoggingInterceptor()
+                    .setLevel(HttpLoggingInterceptor.Level.BASIC)
+            )
             .build()
     }
 

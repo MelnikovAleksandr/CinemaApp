@@ -3,6 +3,7 @@ package ru.asmelnikov.cinemaapp.di
 import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,6 +16,10 @@ import ru.asmelnikov.domain.repository.UserRepository
 import ru.asmelnikov.home.data.remote.ApiService
 import ru.asmelnikov.home.data.repository.MovieRepositoryImpl
 import ru.asmelnikov.home.domain.repository.MovieRepository
+import ru.asmelnikov.profile.data.ImageRepositoryImpl
+import ru.asmelnikov.profile.data.ProfileAuthenticationRepositoryImpl
+import ru.asmelnikov.profile.domain.ImageRepository
+import ru.asmelnikov.profile.domain.ProfileAuthenticationRepository
 import ru.asmelnikov.signup.data.FirebaseStorageRepositoryImpl
 import ru.asmelnikov.signup.domain.repository.FirebaseStorageRepository
 import ru.asmelnikov.splash.data.SplashAuthRepositoryImpl
@@ -77,6 +82,26 @@ object RepositoryModule {
         return UserRepositoryImpl(
             firebaseFirestore = firebaseFirestore,
             firebaseAuth = firebaseAuth
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideProfileAuthenticationRepository(firebaseAuth: FirebaseAuth): ProfileAuthenticationRepository {
+        return ProfileAuthenticationRepositoryImpl(firebaseAuth = firebaseAuth)
+    }
+
+    @Provides
+    @Singleton
+    fun provideImageRepository(
+        firebaseAuth: FirebaseAuth,
+        firebaseFirestore: FirebaseFirestore,
+        firebaseStorage: FirebaseStorage
+    ): ImageRepository {
+        return ImageRepositoryImpl(
+            firebaseAuth = firebaseAuth,
+            firebaseFirestore = firebaseFirestore,
+            firebaseStorage = firebaseStorage
         )
     }
 
