@@ -29,6 +29,10 @@ import ru.asmelnikov.splash.domain.repository.SplashAuthRepository
 import ru.asmelnikov.splash.domain.usecase.IsSignedInUseCase
 import ru.asmelnikov.splash.domain.usecase.ReadOnBoardingStateUseCase
 import ru.asmelnikov.splash.domain.usecase.SplashUseCases
+import ru.asmelnikov.watchlist.domain.WatchListRepository
+import ru.asmelnikov.watchlist.domain.usecase.DeleteWatchListUseCase
+import ru.asmelnikov.watchlist.domain.usecase.GetWatchListUseCase
+import ru.asmelnikov.watchlist.domain.usecase.WatchListUseCases
 import javax.inject.Singleton
 
 @Module
@@ -110,6 +114,19 @@ object UseCaseModule {
             ),
             signOutUseCase = SignOutUseCase(
                 authenticationRepository = profileAuthenticationRepository
+            )
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideWatchListUseCases(watchListRepository: WatchListRepository): WatchListUseCases {
+        return WatchListUseCases(
+            deleteWatchListUseCase = DeleteWatchListUseCase(
+                watchListRepository = watchListRepository
+            ),
+            getWatchListUseCase = GetWatchListUseCase(
+                watchListRepository = watchListRepository
             )
         )
     }

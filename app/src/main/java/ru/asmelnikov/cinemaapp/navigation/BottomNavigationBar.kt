@@ -6,9 +6,7 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.scaleIn
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
@@ -27,8 +25,12 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -80,56 +82,51 @@ fun BottomNavigationBar(
             key(item.name) {
                 val selected = selectedIndex == index
                 val weight = if (selected) 1.5f else 1f
-
-                Box(
+                NavigationBarItem(
                     modifier = Modifier
                         .weight(weight)
                         .fillMaxHeight()
                         .padding(horizontal = if (selected) 4.dp else 0.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    this@NavigationBar.NavigationBarItem(
-                        selected = selected,
-                        colors = NavigationBarItemDefaults.colors(
-                            selectedIconColor = Color.White,
-                            selectedTextColor = Color.White,
-                            unselectedIconColor = Color.Gray,
-                            unselectedTextColor = Color.Gray
-                        ),
-                        onClick = {
-                            selectedIndex = index
-                            onItemClick(item.route)
-                        },
-                        icon = {
-                            this@NavigationBar.AnimatedVisibility(
-                                visible = selected,
-                                enter = fadeIn() + scaleIn(
-                                    animationSpec = spring(
-                                        dampingRatio = Spring.DampingRatioLowBouncy,
-                                        stiffness = Spring.StiffnessLow
-                                    )
+                    selected = selected,
+                    colors = NavigationBarItemDefaults.colors(
+                        selectedIconColor = Color.White,
+                        selectedTextColor = Color.White,
+                        unselectedIconColor = Color.Gray,
+                        unselectedTextColor = Color.Gray
+                    ),
+                    onClick = {
+                        selectedIndex = index
+                        onItemClick(item.route)
+                    },
+                    icon = {
+                        AnimatedVisibility(
+                            visible = selected,
+                            enter = fadeIn() + scaleIn(
+                                animationSpec = spring(
+                                    dampingRatio = Spring.DampingRatioLowBouncy,
+                                    stiffness = Spring.StiffnessLow
                                 )
+                            )
+                        ) {
+                            Row(
+                                modifier = Modifier.clip(CircleShape),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Center
                             ) {
-                                Row(
-                                    modifier = Modifier.clip(CircleShape),
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.Center
-                                ) {
-                                    Icon(
-                                        imageVector = item.icon,
-                                        contentDescription = item.name,
-                                    )
-                                    Divider(modifier = Modifier.width(5.dp))
-                                    Text(text = item.name, fontSize = 12.sp)
-                                }
+                                Icon(
+                                    imageVector = item.icon,
+                                    contentDescription = item.name,
+                                )
+                                Divider(modifier = Modifier.width(5.dp))
+                                Text(text = item.name, fontSize = 12.sp)
                             }
-                            this@NavigationBar.AnimatedVisibility(
-                                visible = !selected,
-                            ) {
-                                Icon(imageVector = item.icon, contentDescription = item.name)
-                            }
-                        })
-                }
+                        }
+                        AnimatedVisibility(
+                            visible = !selected,
+                        ) {
+                            Icon(imageVector = item.icon, contentDescription = item.name)
+                        }
+                    })
             }
         }
     }

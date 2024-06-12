@@ -25,6 +25,7 @@
             <option value="$PROJECT_DIR$/feature/signin" />
             <option value="$PROJECT_DIR$/feature/signup" />
             <option value="$PROJECT_DIR$/feature/splash" />
+            <option value="$PROJECT_DIR$/feature/watchlist" />
           </set>
         </option>
       </GradleProjectSettings>

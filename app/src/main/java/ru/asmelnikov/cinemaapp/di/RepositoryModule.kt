@@ -24,6 +24,8 @@ import ru.asmelnikov.signup.data.FirebaseStorageRepositoryImpl
 import ru.asmelnikov.signup.domain.repository.FirebaseStorageRepository
 import ru.asmelnikov.splash.data.SplashAuthRepositoryImpl
 import ru.asmelnikov.splash.domain.repository.SplashAuthRepository
+import ru.asmelnikov.watchlist.data.WatchListRepositoryImpl
+import ru.asmelnikov.watchlist.domain.WatchListRepository
 import javax.inject.Singleton
 
 @Module
@@ -102,6 +104,18 @@ object RepositoryModule {
             firebaseAuth = firebaseAuth,
             firebaseFirestore = firebaseFirestore,
             firebaseStorage = firebaseStorage
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideWatchListRepository(
+        firebaseFirestore: FirebaseFirestore,
+        firebaseAuth: FirebaseAuth
+    ): WatchListRepository {
+        return WatchListRepositoryImpl(
+            firebaseFirestore = firebaseFirestore,
+            firebaseAuth = firebaseAuth
         )
     }
 

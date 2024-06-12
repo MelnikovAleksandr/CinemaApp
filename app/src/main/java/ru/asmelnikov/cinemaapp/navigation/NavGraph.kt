@@ -15,6 +15,7 @@ import ru.asmelnikov.signin.presentation.navigation.signInScreen
 import ru.asmelnikov.signup.presentation.navigation.signUpScreen
 import ru.asmelnikov.splash.presentation.navigation.splashScreen
 import ru.asmelnikov.util.Screen
+import ru.asmelnikov.watchlist.presentation.navigation.watchList
 
 
 @Composable
@@ -32,6 +33,6 @@ fun NavGraph(navController: NavHostController, paddingValues: PaddingValues) {
         signUpScreen(navController = navController)
         homeScreen(navController = navController)
         profile(navController = navController)
-
+        watchList(navController = navController)
     }
 }
