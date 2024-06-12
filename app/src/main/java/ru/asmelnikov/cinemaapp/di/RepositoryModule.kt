@@ -11,6 +11,11 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import ru.asmelnikov.data.repository.DataStoreRepositoryImpl
 import ru.asmelnikov.data.repository.UserRepositoryImpl
+import ru.asmelnikov.detail.data.remote.DetailApiService
+import ru.asmelnikov.detail.data.repository.DetailMovieRepositoryImpl
+import ru.asmelnikov.detail.data.repository.FirebaseRepositoryImpl
+import ru.asmelnikov.detail.domain.repository.DetailMovieRepository
+import ru.asmelnikov.detail.domain.repository.FirebaseRepository
 import ru.asmelnikov.domain.repository.DataStoreRepository
 import ru.asmelnikov.domain.repository.UserRepository
 import ru.asmelnikov.home.data.remote.ApiService
@@ -114,6 +119,24 @@ object RepositoryModule {
         firebaseAuth: FirebaseAuth
     ): WatchListRepository {
         return WatchListRepositoryImpl(
+            firebaseFirestore = firebaseFirestore,
+            firebaseAuth = firebaseAuth
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideDetailMovieRepository(detailApiService: DetailApiService): DetailMovieRepository {
+        return DetailMovieRepositoryImpl(detailApiService = detailApiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseRepository(
+        firebaseFirestore: FirebaseFirestore,
+        firebaseAuth: FirebaseAuth
+    ): FirebaseRepository {
+        return FirebaseRepositoryImpl(
             firebaseFirestore = firebaseFirestore,
             firebaseAuth = firebaseAuth
         )

@@ -13,6 +13,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.asmelnikov.cinemaapp.utils.CacheInterceptor
 import ru.asmelnikov.cinemaapp.utils.Constants.BASE_URL
+import ru.asmelnikov.detail.data.remote.DetailApiService
 import ru.asmelnikov.home.data.remote.ApiService
 import java.io.File
 import javax.inject.Singleton
@@ -53,5 +54,9 @@ object NetworkModule {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
+    @Singleton
+    @Provides
+    fun provideDetailApiService(retrofit: Retrofit): DetailApiService =
+        retrofit.create(DetailApiService::class.java)
 
 }

@@ -1,26 +1,18 @@
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("com.google.gms.google-services")
-    id("com.google.dagger.hilt.android")
     id("kotlin-kapt")
 }
 
 android {
-    namespace = "ru.asmelnikov.cinemaapp"
-    compileSdk = 34
+    namespace = "ru.asmelnikov.detail"
+    compileSdk = 33
 
     defaultConfig {
-        applicationId = "ru.asmelnikov.cinemaapp"
         minSdk = 27
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -44,11 +36,6 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
-    }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
     }
 }
 
@@ -77,9 +64,8 @@ dependencies {
 
     //Firebase
     implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
-    implementation("com.google.firebase:firebase-storage-ktx")
-    implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation("com.google.firebase:firebase-auth-ktx")
 
     //Network
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
@@ -88,24 +74,19 @@ dependencies {
 
     //Hilt
     implementation("com.google.dagger:hilt-android:2.44")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
 
-    // Splash API
-    implementation("androidx.core:core-splashscreen:1.0.1")
+    //Coil
+    implementation("io.coil-kt:coil-compose:2.6.0")
 
-    implementation(project(":feature:auth"))
-    implementation(project(":feature:splash"))
-    implementation(project(":feature:onboarding"))
-    implementation(project(":feature:signin"))
-    implementation(project(":feature:signup"))
-    implementation(project(":feature:home"))
-    implementation(project(":feature:profile"))
-    implementation(project(":feature:watchlist"))
-    implementation(project(":feature:detail"))
+    //Paging 3
+    implementation("androidx.paging:paging-compose:3.3.0")
+    implementation("androidx.paging:paging-runtime-ktx:3.3.0")
+
     implementation(project(":core:util"))
     implementation(project(":core:domain"))
-    implementation(project(":data"))
-
+    implementation(project(":core:components"))
 }
 
 kapt {

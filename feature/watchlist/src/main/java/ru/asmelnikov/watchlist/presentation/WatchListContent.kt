@@ -120,8 +120,8 @@ fun WatchList(
                         Modifier
                             .fillMaxSize()
                             .padding(5.dp)
-                            .background(color)
-                            .clip(RoundedCornerShape(12.dp)),
+                            .clip(RoundedCornerShape(16.dp))
+                            .background(color),
                     ) {
                         Icon(
                             icon,

@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.NavHostController
 import ru.asmelnikov.auth.navigation.authenticationScreen
+import ru.asmelnikov.detail.presentation.navigation.detailScreen
 import ru.asmelnikov.home.presentation.navigation.homeScreen
 import ru.asmelnikov.onboarding.presentation.navigation.onBoardingScreen
 import ru.asmelnikov.profile.presentation.navigation.profile
@@ -34,5 +35,6 @@ fun NavGraph(navController: NavHostController, paddingValues: PaddingValues) {
         homeScreen(navController = navController)
         profile(navController = navController)
         watchList(navController = navController)
+        detailScreen(navController = navController)
     }
 }
