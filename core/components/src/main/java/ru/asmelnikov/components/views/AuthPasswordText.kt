@@ -66,7 +66,8 @@ fun AuthPasswordText(onInput: (String) -> Unit) {
             .height(60.dp)
             .padding(horizontal = 30.dp),
         colors = TextFieldDefaults.textFieldColors(
-            textColor = Color(0xFF95A6C5),
+            focusedTextColor = Color(0xFF95A6C5),
+            unfocusedTextColor = Color(0xFF95A6C5),
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,

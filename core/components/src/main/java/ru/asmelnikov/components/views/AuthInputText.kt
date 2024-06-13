@@ -42,7 +42,8 @@ fun AuthInputText(
             .padding(horizontal = 30.dp),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
         colors = TextFieldDefaults.textFieldColors(
-            textColor = Color(0xFF95A6C5),
+            focusedTextColor = Color(0xFF95A6C5),
+            unfocusedTextColor = Color(0xFF95A6C5),
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
