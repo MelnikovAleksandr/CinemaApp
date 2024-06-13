@@ -1,21 +1,18 @@
 package ru.asmelnikov.cinemaapp.di
 
-import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import ru.asmelnikov.cinemaapp.utils.CacheInterceptor
 import ru.asmelnikov.cinemaapp.utils.Constants.BASE_URL
 import ru.asmelnikov.detail.data.remote.DetailApiService
 import ru.asmelnikov.home.data.remote.ApiService
-import java.io.File
+import ru.inspirationpoint.search.data.remote.SearchApiService
+import ru.inspirationpoint.video.data.remote.VideoApiService
 import javax.inject.Singleton
 
 @Module
@@ -24,14 +21,7 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideCacheInterceptor() = CacheInterceptor()
-
-    @Singleton
-    @Provides
-    fun provideOkHttp(
-        @ApplicationContext context: Context,
-        cacheInterceptor: CacheInterceptor
-    ): OkHttpClient {
+    fun provideOkHttp(): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(
                 HttpLoggingInterceptor()
@@ -58,5 +48,15 @@ object NetworkModule {
     @Provides
     fun provideDetailApiService(retrofit: Retrofit): DetailApiService =
         retrofit.create(DetailApiService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideSearchApiService(retrofit: Retrofit): SearchApiService =
+        retrofit.create(SearchApiService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideVideoApiService(retrofit: Retrofit): VideoApiService =
+        retrofit.create(VideoApiService::class.java)
 
 }

@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import androidx.paging.map
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -50,6 +51,7 @@ class HomeViewModel @Inject constructor(
 
     private fun loadTopRatedMovie() {
         homeUseCases.getTopRatedMovieUseCase.invoke()
+            .cachedIn(viewModelScope)
             .onEach {
                 topRatedMovieList.value = it.map { result -> result.toResultHomeUI() }
             }
@@ -64,27 +66,21 @@ class HomeViewModel @Inject constructor(
                         response.data?.documents?.forEach { document ->
                             val user = document.toObject(User::class.java)
                             userState.value = user
-
                         }
                     }
-
-                    is Response.Loading -> {
-                    }
-
-                    is Response.Error -> {
-                    }
+                    is Response.Loading -> {}
+                    is Response.Error -> {}
                 }
             }.launchIn(viewModelScope)
     }
 
     private fun loadPopularMovie() {
-
         homeUseCases.getPopularMovieUseCase.invoke()
+            .cachedIn(viewModelScope)
             .onEach {
                 popularMovieList.value = it.map { result -> result.toResultHomeUI() }
             }
             .launchIn(viewModelScope)
-
     }
 
     private fun loadProfileImage() {
@@ -96,7 +92,6 @@ class HomeViewModel @Inject constructor(
                             imageState.value = image.toString()
                         }
                     }
-
                     is Response.Loading -> {}
                     is Response.Error -> {
                         println(response.errorMessage)
@@ -108,6 +103,7 @@ class HomeViewModel @Inject constructor(
 
     private fun loadNowPlayingMovie() {
         homeUseCases.getNowPlayingMovieUseCase.invoke()
+            .cachedIn(viewModelScope)
             .onEach {
                 nowPlayingMovieList.value = it.map { result -> result.toResultHomeUI() }
             }

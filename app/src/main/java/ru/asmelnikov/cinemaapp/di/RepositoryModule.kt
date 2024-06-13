@@ -31,6 +31,12 @@ import ru.asmelnikov.splash.data.SplashAuthRepositoryImpl
 import ru.asmelnikov.splash.domain.repository.SplashAuthRepository
 import ru.asmelnikov.watchlist.data.WatchListRepositoryImpl
 import ru.asmelnikov.watchlist.domain.WatchListRepository
+import ru.inspirationpoint.search.data.remote.SearchApiService
+import ru.inspirationpoint.search.data.repository.SearchRepositoryImpl
+import ru.inspirationpoint.search.domain.repository.SearchRepository
+import ru.inspirationpoint.video.data.remote.VideoApiService
+import ru.inspirationpoint.video.data.repository.VideoRepositoryImpl
+import ru.inspirationpoint.video.domain.repository.VideoRepository
 import javax.inject.Singleton
 
 @Module
@@ -140,6 +146,18 @@ object RepositoryModule {
             firebaseFirestore = firebaseFirestore,
             firebaseAuth = firebaseAuth
         )
+    }
+
+    @Provides
+    @Singleton
+    fun provideSearchRepository(searchApiService: SearchApiService): SearchRepository {
+        return SearchRepositoryImpl(searchApiService = searchApiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideVideoRepository(videoApiService: VideoApiService): VideoRepository {
+        return VideoRepositoryImpl(videoApiService = videoApiService)
     }
 
 }

@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "ru.asmelnikov.data"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 27
@@ -16,7 +16,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

@@ -4,6 +4,7 @@ plugins {
     id("com.google.gms.google-services")
     id("com.google.dagger.hilt.android")
     id("kotlin-kapt")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -25,7 +26,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -80,6 +81,8 @@ dependencies {
     implementation("com.google.firebase:firebase-storage-ktx")
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation("com.google.firebase:firebase-crashlytics")
+    implementation("com.google.firebase:firebase-analytics")
 
     //Network
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
@@ -102,6 +105,8 @@ dependencies {
     implementation(project(":feature:profile"))
     implementation(project(":feature:watchlist"))
     implementation(project(":feature:detail"))
+    implementation(project(":feature:search"))
+    implementation(project(":feature:video"))
     implementation(project(":core:util"))
     implementation(project(":core:domain"))
     implementation(project(":data"))

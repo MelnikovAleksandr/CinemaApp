@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "ru.asmelnikov.detail"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 27
@@ -17,7 +17,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -79,10 +79,6 @@ dependencies {
 
     //Coil
     implementation("io.coil-kt:coil-compose:2.6.0")
-
-    //Paging 3
-    implementation("androidx.paging:paging-compose:3.3.0")
-    implementation("androidx.paging:paging-runtime-ktx:3.3.0")
 
     implementation(project(":core:util"))
     implementation(project(":core:domain"))
