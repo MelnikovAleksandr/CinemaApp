@@ -75,7 +75,7 @@ fun BottomNavigationBar(
     NavigationBar(
         modifier = Modifier
             .height(52.dp),
-        containerColor = MaterialTheme.colorScheme.background,
+        containerColor = MaterialTheme.colorScheme.secondary,
         tonalElevation = 10.dp
     ) {
         items.forEachIndexed { index, item ->

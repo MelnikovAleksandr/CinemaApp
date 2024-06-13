@@ -4,6 +4,12 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import ru.asmelnikov.detail.domain.repository.DetailMovieRepository
+import ru.asmelnikov.detail.domain.repository.FirebaseRepository
+import ru.asmelnikov.detail.domain.usecase.DetailUseCases
+import ru.asmelnikov.detail.domain.usecase.GetCastUseCase
+import ru.asmelnikov.detail.domain.usecase.GetMovieDetailUseCase
+import ru.asmelnikov.detail.domain.usecase.SaveMovieToWatchlistUseCase
 import ru.asmelnikov.domain.repository.DataStoreRepository
 import ru.asmelnikov.domain.repository.UserRepository
 import ru.asmelnikov.domain.usecase.GetUserProfileImageUseCase
@@ -127,6 +133,23 @@ object UseCaseModule {
             ),
             getWatchListUseCase = GetWatchListUseCase(
                 watchListRepository = watchListRepository
+            )
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideDetailUseCases(
+        detailMovieRepository: DetailMovieRepository,
+        firebaseRepository: FirebaseRepository
+    ): DetailUseCases {
+        return DetailUseCases(
+            getCastUseCase = GetCastUseCase(detailMovieRepository = detailMovieRepository),
+            getMovieDetailUseCase = GetMovieDetailUseCase(
+                detailMovieRepository = detailMovieRepository
+            ),
+            saveMovieToWatchlistUseCase = SaveMovieToWatchlistUseCase(
+                firebaseRepository = firebaseRepository
             )
         )
     }

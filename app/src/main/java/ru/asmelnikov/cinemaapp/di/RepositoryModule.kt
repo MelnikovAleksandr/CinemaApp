@@ -11,6 +11,11 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import ru.asmelnikov.data.repository.DataStoreRepositoryImpl
 import ru.asmelnikov.data.repository.UserRepositoryImpl
+import ru.asmelnikov.detail.data.remote.DetailApiService
+import ru.asmelnikov.detail.data.repository.DetailMovieRepositoryImpl
+import ru.asmelnikov.detail.data.repository.FirebaseRepositoryImpl
+import ru.asmelnikov.detail.domain.repository.DetailMovieRepository
+import ru.asmelnikov.detail.domain.repository.FirebaseRepository
 import ru.asmelnikov.domain.repository.DataStoreRepository
 import ru.asmelnikov.domain.repository.UserRepository
 import ru.asmelnikov.home.data.remote.ApiService
@@ -26,6 +31,12 @@ import ru.asmelnikov.splash.data.SplashAuthRepositoryImpl
 import ru.asmelnikov.splash.domain.repository.SplashAuthRepository
 import ru.asmelnikov.watchlist.data.WatchListRepositoryImpl
 import ru.asmelnikov.watchlist.domain.WatchListRepository
+import ru.inspirationpoint.search.data.remote.SearchApiService
+import ru.inspirationpoint.search.data.repository.SearchRepositoryImpl
+import ru.inspirationpoint.search.domain.repository.SearchRepository
+import ru.inspirationpoint.video.data.remote.VideoApiService
+import ru.inspirationpoint.video.data.repository.VideoRepositoryImpl
+import ru.inspirationpoint.video.domain.repository.VideoRepository
 import javax.inject.Singleton
 
 @Module
@@ -117,6 +128,36 @@ object RepositoryModule {
             firebaseFirestore = firebaseFirestore,
             firebaseAuth = firebaseAuth
         )
+    }
+
+    @Provides
+    @Singleton
+    fun provideDetailMovieRepository(detailApiService: DetailApiService): DetailMovieRepository {
+        return DetailMovieRepositoryImpl(detailApiService = detailApiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseRepository(
+        firebaseFirestore: FirebaseFirestore,
+        firebaseAuth: FirebaseAuth
+    ): FirebaseRepository {
+        return FirebaseRepositoryImpl(
+            firebaseFirestore = firebaseFirestore,
+            firebaseAuth = firebaseAuth
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideSearchRepository(searchApiService: SearchApiService): SearchRepository {
+        return SearchRepositoryImpl(searchApiService = searchApiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideVideoRepository(videoApiService: VideoApiService): VideoRepository {
+        return VideoRepositoryImpl(videoApiService = videoApiService)
     }
 
 }
